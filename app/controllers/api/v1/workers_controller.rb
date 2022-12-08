@@ -1,5 +1,5 @@
 class Api::V1::WorkersController < ApplicationController
-  before_action :set_worker, only: [:show, :destroy]
+  before_action :set_worker, only: [:show, :destroy, :update]
 
   def index
     @workers = Worker.all
@@ -11,7 +11,7 @@ class Api::V1::WorkersController < ApplicationController
     if @worker.save
       render json: @worker
     else
-      render json: { error: @worker.errors }, status: 400
+      render json: { error: @worker.errors.full_messages }, status: 400
     end
   end
 
@@ -23,9 +23,17 @@ class Api::V1::WorkersController < ApplicationController
     end
   end
 
+  def update
+    if @worker.update(worker_params)
+      render json: @worker
+    else
+      no_worker_found
+    end
+  end
+
   def destroy
     if @worker&.destroy
-      render json: { message: 'Worker record deleted successfully' }
+      render json: { message: 'Worker deleted' }
     else
       no_worker_found
     end
@@ -42,6 +50,6 @@ class Api::V1::WorkersController < ApplicationController
   end
 
   def no_worker_found
-    render json: {error: 'Worker doesn\'t exist. Perhaps a typo?'}, status: 400
+    render json: {error: 'Worker not found'}, status: 422
   end
 end

@@ -1,4 +1,6 @@
 class Api::V1::ShiftsController < ApplicationController
+  before_action :set_shift, only: [:show, :destroy, :update]
+
   def index
     @shifts = Shift.all
     render json: @shifts
@@ -9,12 +11,20 @@ class Api::V1::ShiftsController < ApplicationController
     if @shift.save
       render json: @shift
     else
-      render json: { error: @shift.errors }, status: 422
+      render json: { error: @shift.errors.full_messages }, status: 422
     end
   end
 
   def show
     if @shift
+      render json: @shift
+    else
+      no_shift_found
+    end
+  end
+
+  def update
+    if @shift.update(shift_params)
       render json: @shift
     else
       no_shift_found

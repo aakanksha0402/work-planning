@@ -1,3 +1,3 @@
-class Api::V1::WorkerSerialzerSerializer < ActiveModel::Serializer
+class Api::V1::WorkerSerializer < ActiveModel::Serializer
   attributes :id, :name
 end
