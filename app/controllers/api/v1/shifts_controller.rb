@@ -9,7 +9,7 @@ class Api::V1::ShiftsController < ApplicationController
     if @shift.save
       render json: @shift
     else
-      render json: { error: @shift.errors }, status: 400
+      render json: { error: @shift.errors }, status: 422
     end
   end
 
@@ -23,7 +23,7 @@ class Api::V1::ShiftsController < ApplicationController
 
   def destroy
     if @shift&.destroy
-      render json: { message: 'Shift record deleted successfully' }
+      render json: { message: 'Shift deleted' }
     else
       no_shift_found
     end
@@ -40,6 +40,6 @@ class Api::V1::ShiftsController < ApplicationController
   end
 
   def no_shift_found
-    render json: {error: 'Shift doesn\'t exist. Perhaps a typo?'}, status: 400
+    render json: {error: 'Shift doesn\'t exist. Perhaps a typo?'}, status: 422
   end
 end
