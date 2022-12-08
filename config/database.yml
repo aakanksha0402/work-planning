@@ -5,6 +5,8 @@ default: &default
 
 development:
   <<: *default
+  user: aakanksha
+  password: postgres
   database: work_planning_development
 
 test:
