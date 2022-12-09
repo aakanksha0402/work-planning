@@ -27,7 +27,7 @@ class Api::V1::WorkersController < ApplicationController
     if @worker.update(worker_params)
       render json: @worker
     else
-      no_worker_found
+      render json: { error: @worker.errors.full_messages }, status: 400
     end
   end
 
@@ -50,6 +50,6 @@ class Api::V1::WorkersController < ApplicationController
   end
 
   def no_worker_found
-    render json: {error: 'Worker not found'}, status: 422
+    render json: {error: 'Worker not found'}, status: 404
   end
 end

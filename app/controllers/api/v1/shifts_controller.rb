@@ -11,7 +11,7 @@ class Api::V1::ShiftsController < ApplicationController
     if @shift.save
       render json: @shift
     else
-      render json: { error: @shift.errors.full_messages }, status: 422
+      render json: { error: @shift.errors.full_messages }, status: 400
     end
   end
 
@@ -27,7 +27,7 @@ class Api::V1::ShiftsController < ApplicationController
     if @shift.update(shift_params)
       render json: @shift
     else
-      no_shift_found
+      render json: { error: @shift.errors.full_messages }, status: 400
     end
   end
 
@@ -50,6 +50,6 @@ class Api::V1::ShiftsController < ApplicationController
   end
 
   def no_shift_found
-    render json: {error: 'Shift not found'}, status: 422
+    render json: {error: 'Shift not found'}, status: 404
   end
 end

@@ -4,11 +4,11 @@ class Shift < ApplicationRecord
   belongs_to :worker
 
   validates :shift_name, presence: true
-  validate :only_one_shift_per_worker, on: :create
+  validate :only_one_shift_per_worker
   validate :shift_date
 
   def only_one_shift_per_worker
-    errors.add(:base, "Double shift in a day is not allowed") if Shift.find_by(worker: self.worker, work_date: self.work_date)
+    errors.add(:base, "Double shift in a day is not allowed") if Shift.where(worker: self.worker, work_date: self.work_date).where.not(id: self.id).take
   end
 
   def shift_date
