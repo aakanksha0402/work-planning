@@ -46,7 +46,8 @@ RSpec.describe "Shifts", type: :request do
       it "returns http error" do
         post "/api/v1/shifts", params: {shift: {worker_id: worker.id}}
         response_body = JSON.parse(response.body)
-        expect(response_body['error']).to eq(["Please enter date in YYYY/MM/DD format", "Shift name can't be blank"])
+        expect(response_body['error']).to include("Please enter date in YYYY/MM/DD format")
+        expect(response_body['error']).to include("Shift name can't be blank")
         expect(response.status).to eq(422)
       end
     end

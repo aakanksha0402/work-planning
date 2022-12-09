@@ -2,7 +2,7 @@ class Api::V1::WorkersController < ApplicationController
   before_action :set_worker, only: [:show, :destroy, :update]
 
   def index
-    @workers = Worker.all
+    @workers = Worker.all.order(id: :desc)
     render json: @workers
   end
 

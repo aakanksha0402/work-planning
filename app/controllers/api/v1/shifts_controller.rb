@@ -2,7 +2,7 @@ class Api::V1::ShiftsController < ApplicationController
   before_action :set_shift, only: [:show, :destroy, :update]
 
   def index
-    @shifts = Shift.all
+    @shifts = Shift.all.order(id: :desc)
     render json: @shifts
   end
 
@@ -50,6 +50,6 @@ class Api::V1::ShiftsController < ApplicationController
   end
 
   def no_shift_found
-    render json: {error: 'Shift doesn\'t exist. Perhaps a typo?'}, status: 422
+    render json: {error: 'Shift not found'}, status: 422
   end
 end
